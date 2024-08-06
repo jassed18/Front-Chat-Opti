@@ -1,0 +1,56 @@
+/* src/components/MessageInput.css */
+
+.message-input {
+  display: flex;
+  padding: 10px;
+  background: #f1f1f1;
+  border-top: 1px solid #ccc;
+}
+
+.message-input input {
+  flex: 1;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  outline: none;
+}
+
+.message-input button {
+  margin-left: 10px;
+  padding: 10px 20px;
+  border: none;
+  background: #007bff;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.message-input button:hover {
+  background: #0056b3;
+}
+
+.audio-button {
+  background: transparent;
+  padding: 0;
+  margin-left: 10px;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.send-icon{
+  width: 20px;
+  height: 20px;
+  color: white;
+}
+
+.microphone-icon {
+  width: 20px;
+  height: 20px;
+  color: white;
+}
+
+.audio-button:hover .microphone-icon {
+  color: white;
+}

@@ -1,0 +1,25 @@
+/* src/components/ChatWindow.css */
+
+.chat-window {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+  background: #f9f9f9;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .chat-window {
+    padding: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .chat-window {
+    padding: 5px;
+    gap: 5px;
+  }
+}
