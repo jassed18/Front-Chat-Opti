@@ -1,19 +1,33 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
+import axios from 'axios';
 import ChatWindow from './ChatWindows';
 import MessageInput from './MessageInput';
 import './ChatApp.css';
 
 const ChatApp = () => {
   const [messages, setMessages] = useState([]);
+  const messageEndRef = useRef(null);
 
-  const handleSendMessage = (message) => {
+  const scrollToBottom = () => {
+    messageEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
+  const handleSendMessage = async (message) => {
     setMessages([...messages, { type: 'text', content: message, sender: 'user' }]);
-    setTimeout(() => {
+    try {
+      const response = await axios.post('http://localhost:5000/send_message', { message });
+      const botMessage = response.data.output.generic[0].text;
       setMessages((prevMessages) => [
         ...prevMessages,
-        { type: 'text', content: `Echo: ${message}`, sender: 'bot' },
+        { type: 'text', content: botMessage, sender: 'bot' },
       ]);
-    }, 1000);
+    } catch (error) {
+      console.error('Error sending message:', error);
+    }
   };
 
   const handleSendAudio = (audioBlob) => {
@@ -23,6 +37,7 @@ const ChatApp = () => {
   return (
     <div className="chat-app">
       <ChatWindow messages={messages} />
+      <div ref={messageEndRef} />
       <MessageInput onSendMessage={handleSendMessage} onSendAudio={handleSendAudio} />
     </div>
   );

@@ -5,7 +5,7 @@ const Message = ({ type, content, sender }) => {
   if (type === 'text') {
     return (
       <div className={`message ${sender}`}>
-        <p>{content}</p>
+        <p className="message-content">{content}</p>
       </div>
     );
   } else if (type === 'audio') {
