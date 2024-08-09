@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
-import ChatWindow from './ChatWindows';
 import MessageInput from './MessageInput';
+import Message from './Message';
 import './ChatApp.css';
 
 const ChatApp = () => {
@@ -19,12 +19,22 @@ const ChatApp = () => {
   const handleSendMessage = async (message) => {
     setMessages([...messages, { type: 'text', content: message, sender: 'user' }]);
     try {
-      const response = await axios.post('http://localhost:5000/send_message', { message });
-      const botMessage = response.data.output.generic[0].text;
-      setMessages((prevMessages) => [
-        ...prevMessages,
-        { type: 'text', content: botMessage, sender: 'bot' },
-      ]);
+      const response = await axios.post('https://python-web.1jgnu1o1v8pl.us-south.codeengine.appdomain.cloud/send_message', { message });
+      const botResponses = response.data.output.generic;
+
+      botResponses.forEach((botResponse) => {
+        if (botResponse.response_type === 'text') {
+          setMessages((prevMessages) => [
+            ...prevMessages,
+            { type: 'text', content: botResponse.text, sender: 'bot' },
+          ]);
+        } else if (botResponse.response_type === 'option') {
+          setMessages((prevMessages) => [
+            ...prevMessages,
+            { type: 'option', options: botResponse.options, sender: 'bot' },
+          ]);
+        }
+      });
     } catch (error) {
       console.error('Error sending message:', error);
     }
@@ -34,10 +44,18 @@ const ChatApp = () => {
     setMessages([...messages, { type: 'audio', content: URL.createObjectURL(audioBlob), sender: 'user' }]);
   };
 
+  const handleOptionClick = (optionText) => {
+    handleSendMessage(optionText);
+  };
+
   return (
     <div className="chat-app">
-      <ChatWindow messages={messages} />
-      <div ref={messageEndRef} />
+      <div className="messages">
+        {messages.map((message, index) => (
+          <Message key={index} {...message} onOptionClick={handleOptionClick} />
+        ))}
+        <div ref={messageEndRef} />
+      </div>
       <MessageInput onSendMessage={handleSendMessage} onSendAudio={handleSendAudio} />
     </div>
   );

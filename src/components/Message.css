@@ -1,21 +1,30 @@
-
 .message {
   padding: 10px;
   margin: 10px;
   border-radius: 4px;
   max-width: 70%;
+  word-wrap: break-word;
 }
-
 .message.user {
   background: #dcf8c6;
   align-self: flex-end;
 }
-
 .message.bot {
   background: #f1f1f1;
   align-self: flex-start;
 }
-
 .message-content {
   white-space: pre-line;
+}
+.message-button {
+  margin: 5px;
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.message-button:hover {
+  background-color: #0056b3;
 }
