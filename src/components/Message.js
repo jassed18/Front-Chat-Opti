@@ -8,7 +8,7 @@ const Message = ({ type, content, sender, options, onOptionClick }) => {
       onOptionClick(optionText);
     }
     try {
-      await axios.post('https://python-web.1jgnu1o1v8pl.us-south.codeengine.appdomain.cloud/send_message', { message: optionText });
+      await axios.post(process.env.REACT_APP_API_URL, { message: optionText });
     } catch (error) {
       console.error('Error sending option:', error);
     }

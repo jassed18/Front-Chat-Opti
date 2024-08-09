@@ -19,7 +19,7 @@ const ChatApp = () => {
   const handleSendMessage = async (message) => {
     setMessages([...messages, { type: 'text', content: message, sender: 'user' }]);
     try {
-      const response = await axios.post('https://python-web.1jgnu1o1v8pl.us-south.codeengine.appdomain.cloud/send_message', { message });
+      const response = await axios.post(process.env.REACT_APP_API_URL, { message });
       const botResponses = response.data.output.generic;
 
       botResponses.forEach((botResponse) => {
