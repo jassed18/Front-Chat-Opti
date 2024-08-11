@@ -8,7 +8,10 @@ const Message = ({ type, content, sender, options, onOptionClick }) => {
       onOptionClick(optionText);
     }
     try {
-      await axios.post(process.env.REACT_APP_API_URL, { message: optionText });
+    let sessionId = localStorage.getItem('session_id');
+
+      await axios.post(process.env.REACT_APP_API_URL, { message: optionText,session_id: sessionId });
+      
     } catch (error) {
       console.error('Error sending option:', error);
     }
